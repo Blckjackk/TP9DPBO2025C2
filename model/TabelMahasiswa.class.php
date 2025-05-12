@@ -23,6 +23,7 @@ class TabelMahasiswa extends DB
     }
 
 	function addData($nim, $nama, $tempat, $tl, $gender, $email, $telp) {
+		$this->open(); // Membuka koneksi ke database
 		$query = "INSERT INTO mahasiswa (nim, nama, tempat, tl, gender, email, telp)
 				VALUES ('$nim', '$nama', '$tempat', '$tl', '$gender', '$email', '$telp')";
 
@@ -36,6 +37,7 @@ class TabelMahasiswa extends DB
 			// Jika gagal menambahkan data
 			echo "Gagal menambahkan data.";
 		}
+		$this->close(); // Tutup koneksi setelah eksekusi
 	}
 
 

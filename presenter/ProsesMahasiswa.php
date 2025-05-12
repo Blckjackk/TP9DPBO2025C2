@@ -106,7 +106,21 @@ class ProsesMahasiswa implements KontrakPresenter
 		$this->tabelmahasiswa->addData($nim, $nama, $tempat, $tl, $gender, $email, $telp);
 	}
 
+	function updateData($id, $nim, $nama, $tempat, $tl, $gender, $email, $telp) {
+        $this->tabelmahasiswa = new TabelMahasiswa('localhost', 'root', '', 'mvp_php');
+        $this->tabelmahasiswa->open();
+        $result = $this->tabelmahasiswa->updateData($id, $nim, $nama, $tempat, $tl, $gender, $email, $telp);
+        $this->tabelmahasiswa->close();
+        return $result;
+    }
 
+    function deleteData($id) {
+        $this->tabelmahasiswa = new TabelMahasiswa('localhost', 'root', '', 'mvp_php');
+        $this->tabelmahasiswa->open();
+        $result = $this->tabelmahasiswa->deleteData($id);
+        $this->tabelmahasiswa->close();
+        return $result;
+    }
 
 	function getMahasiswaById($id)
     {

@@ -18,7 +18,7 @@ class TampilMahasiswa implements KontrakView
 		$this->prosesmahasiswa = new ProsesMahasiswa();
 	}
 
-	function tampil()
+	function tampil() 
 	{
 		$this->prosesmahasiswa->prosesDataMahasiswa();
 		$data = null;
@@ -37,7 +37,7 @@ class TampilMahasiswa implements KontrakView
 			<td>" . $this->prosesmahasiswa->getTelepon($i) . "</td>
 			<td>
 				<a href='index.php?id=" . $this->prosesmahasiswa->getId($i) . "' class='btn btn-warning btn-sm'>Edit</a>
-				<a href='index.php?id=" . $this->prosesmahasiswa->getId($i) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Delete</a>
+				<a href='index.php?delete=" . $this->prosesmahasiswa->getId($i) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Delete</a>
 
 			</td> </tr>";
 		}
@@ -127,7 +127,7 @@ class TampilMahasiswa implements KontrakView
 		}
 
 		// Buat form dengan data mahasiswa yang sudah ada
-		$data = "<form method='POST' action=''>
+		$data = "<form method='POST' action='index.php'>
 			<input type='hidden' name='id' value='" . $mhs->getId() . "'>
 			<div class='mb-3'>
 				<label>NIM</label>
@@ -169,10 +169,38 @@ class TampilMahasiswa implements KontrakView
 		$this->tpl->write();
 	}
 
+	function updateData()
+	{
+		if(isset($_POST['id'], $_POST['nim'], $_POST['nama'], $_POST['tempat'], $_POST['tl'], 
+		   $_POST['gender'], $_POST['email'], $_POST['telp'])) {
+			$id = $_POST['id'];
+			$nim = $_POST['nim'];
+			$nama = $_POST['nama'];
+			$tempat = $_POST['tempat'];
+			$tl = $_POST['tl'];
+			$gender = $_POST['gender'];
+			$email = $_POST['email'];
+			$telp = $_POST['telp'];
+			
+			$result = $this->prosesmahasiswa->updateData($id, $nim, $nama, $tempat, $tl, $gender, $email, $telp);
+			if($result) {
+				echo "Data berhasil diupdate";
+			} else {
+				echo "Gagal mengupdate data";
+			}
+		}
+	}
 
 	function tampilDelete($id)
 	{
+		if($id) {
+			$result = $this->prosesmahasiswa->deleteData($id);
+			if($result) {
+				echo "Data berhasil dihapus";
+			} else {
+				echo "Gagal menghapus data";
+			}
+		}
 	}
-
 
 }
